@@ -49,8 +49,8 @@ export const SignUp = async (req, res) => {
 export const Login = async (req, res) => {
     try {
         const { email, password } = req.body
-        const user = await User.findOne({ email })
-        if (!user) return res.status(500).send({ success: false, message: "Email Dosen't Exist LogIn " })
+        const user = await User.findOne({email})
+        if (!user) return res.status(500).send({ success: false, message: "Email Dosen't Exist Register" })
         const comparePassword = bcrypt.compareSync(password, user.password || "")
         if (!comparePassword) return res.status(500).send({ success: false, message: "Email Or Password dosen't Matching" })
         jwtToken(user._id, res)

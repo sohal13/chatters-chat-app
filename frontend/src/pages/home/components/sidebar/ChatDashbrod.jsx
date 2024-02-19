@@ -1,32 +1,35 @@
 // ChatDashbord component
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Chatts from './Chatts';
 import './ChatDashbord.css'
+import axios from 'axios';
 
 const ChatDashbord = () => {
-  // Assuming users is an array containing user data
-  const users = [/* Array of user data */];
-
+  const [loading , setLoading]=useState(false)
+  const [constConversation ,setConversation] = useState([])
+ 
+  useEffect(()=>{
+    const getConversation =async ()=>{
+        setLoading(true)
+        try {
+          const res = await axios.get(`/api/user`);
+          const data = res.data;
+          if(data.success === false){
+            setLoading(false)
+            console.log(data.message);
+          }
+          setLoading(false)
+          setConversation(data)
+        } catch (error) {
+          setLoading(false)
+          console.log(error);
+        }
+    }
+    getConversation()
+  },[])
   return (
-    <div className="max-h-[410px] overflow-y-auto scrollbar">
-      {/*users.map(user => (
-        // Render user component here
-        <div key={user.id}>{}</div>
-      ))*/}
+    <div className="min-h-[400px] max-h-[400px] m overflow-y-auto scrollbar">
       <Chatts/>
-      <Chatts/>
-      <Chatts/>
-      <Chatts/>
-      <Chatts/>
-      <Chatts/>
-      <Chatts/>
-      <Chatts/>
-      <Chatts/>
-      <Chatts/>
-      <Chatts/>
-      <Chatts/>
-      <Chatts/>
-
     </div>
   );
 };
