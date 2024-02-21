@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext';
-
+import {toast} from 'react-toastify'
 const Login = () => {
 
     const navigate = useNavigate();
@@ -27,16 +27,17 @@ const Login = () => {
                 setLoading(false)
                 return console.log(data.message);    
             }
-            console.log(data.message);
+            toast.success(data.message)
             localStorage.setItem("chatters",JSON.stringify(data))
             setAuthUser(data)
            setLoading(false)
             navigate(`/`)
         } catch (error) {
             setLoading(false)
-            console.log(error.response.data);
+            toast.error(error.response.data.message)
         }
     }
+ 
   return (
     <div className='flex flex-col items-center justify-center mix-w-full mx-auto'>
         <div className='w-full p-6 rounded-lg shadow-lg bg-gray-400 bg-clip-padding backderop-filter backdrop-blur-lg bg-opacity-0'>

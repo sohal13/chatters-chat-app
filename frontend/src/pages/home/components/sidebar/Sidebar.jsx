@@ -55,9 +55,9 @@ const Sidebar = ({onSelectUser}) => {
    //------------------------------------------------
 console.log(chatUser);
   return (
-    <div className='h-full w-auto'>
-        <form className='w-auto flex items-center justify-between bg-white rounded-full'>
-        <input value={search} id='search' onChange={handelSearch} type='text' className='px-4 w-auto outline-none rounded-full' placeholder='search user'></input>
+    <div className='h-full w-auto px-1'>
+        <form className='w-auto flex items-center justify-between bg-white rounded-full '>
+        <input value={search} id='search' onChange={handelSearch} type='text' className='px-4 w-auto bg-transparent outline-none rounded-full' placeholder='search user'></input>
    <button type='submit' className='btn btn-circle bg-sky-700 hover:bg-gray-950'>
    <FaSearch />
    </button>

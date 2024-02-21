@@ -5,6 +5,8 @@ import SignUp from './pages/signup/SignUp.jsx'
 import DefaultPage from './pages/DefaultPage.jsx'
 import { useAuth } from './context/AuthContext.jsx'
 import { VerifiedRout } from './context/VerifyUser.jsx'
+import { ToastContainer} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   const {authUser} = useAuth();
@@ -18,7 +20,7 @@ function App() {
         <Route path='/' element={<Home/>}/>
         </Route>
       </Routes>
-
+      <ToastContainer />
      </div>
     </>
   )

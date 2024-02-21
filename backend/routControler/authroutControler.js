@@ -70,7 +70,6 @@ export const Login = async (req, res) => {
     }
 }
 
-
 export const LogOut = async (req, res) => {
     try {
         res.cookie("jwt","",{

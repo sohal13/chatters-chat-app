@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import { BiLogOut } from "react-icons/bi";
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../../../context/AuthContext';
+import {toast} from 'react-toastify'
 
 const Logout = () => {
 const navigate = useNavigate();
@@ -18,7 +19,7 @@ const [loading , setLoading] = useState(false)
         setLoading(false)
         console.log(data.message);
       }
-      console.log(data);
+      toast.info(data.message)
       localStorage.removeItem("chatters")
       setAuthUser(null);
       setLoading(false)
@@ -26,6 +27,7 @@ const [loading , setLoading] = useState(false)
     } catch (error) {
       setLoading(false)
       console.log(error);
+      toast.error(error.response.data.message)
     }
   }
   return (

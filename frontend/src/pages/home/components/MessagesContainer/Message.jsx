@@ -55,10 +55,10 @@ leastMesageRef.current?.scrollIntoView({behavior:"smooth"})
         </div>
       )}
       {!loading && messages?.length === 0 && (
-        <p className='text-center'>Send a message to start Conversation</p>
+        <p className='text-center text-white items-center'>Send a message to start Conversation</p>
       )}
       {!loading && messages?.length > 0 && messages?.map((message) => (
-       <div key={message?._id} ref={leastMesageRef}>
+       <div className='text-white' key={message?._id} ref={leastMesageRef}>
 <div className={`chat ${message.senderId === authUser._id ? 'chat-end' : 'chat-start' }`}>
   <div className="chat-image avatar">
   </div>

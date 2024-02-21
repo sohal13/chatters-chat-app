@@ -34,7 +34,7 @@ const hadelSubmit=async(e)=>{
   return (
     <form onSubmit={hadelSubmit} className=' rounded-full'>
         <div className='w-full rounded-full flex items-center bg-white'>
-            <input value={sendData}  required onChange={handelMessages} id='message'  type='text ' className='w-full outline-none px-4 rounded-full'/>
+            <input value={sendData}  required onChange={handelMessages} id='message'  type='text ' className='w-full bg-transparent outline-none px-4 rounded-full'/>
            <button type='submit'>
             {loading ?<div className='loading loading-spinner'></div>:<IoSend size={25} className='text-sky-700 cursor-pointer rounded-full bg-gray-800 w-10 h-auto p-1'/>}
             </button>
