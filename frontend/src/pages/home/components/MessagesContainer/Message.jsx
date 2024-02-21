@@ -2,15 +2,25 @@ import axios from 'axios';
 import React, { useEffect, useRef, useState } from 'react'
 import userConversation from '../../../../zustans/useConversation';
 import { useAuth } from '../../../../context/AuthContext';
+import { useSocketContext } from '../../../../context/SocketContext';
 
 const Message = () => {
 
   const [loading, setLoading] = useState(false);
   const { messages, setMessages, selectedConversation } = userConversation()
-  const {authUser} = useAuth()
+  const {authUser} = useAuth();
+  const {socket} = useSocketContext();
   const id = selectedConversation?._id
-
   const leastMesageRef = useRef();
+
+
+  useEffect(()=>{
+    socket?.on("newMessage",(newMessage)=>{
+      setMessages([...messages,newMessage])
+    })
+
+    return ()=> socket?.off("newMessage")
+  },[socket,setMessages,messages])
  useEffect(()=>{
   setTimeout(()=>{
 leastMesageRef.current?.scrollIntoView({behavior:"smooth"})

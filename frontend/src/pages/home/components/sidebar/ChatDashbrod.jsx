@@ -4,10 +4,11 @@ import Chatts from './Chatts';
 import './ChatDashbord.css'
 import axios from 'axios';
 
-const ChatDashbord = () => {
+const ChatDashbord = ({handleConversationClick}) => {
   const [loading , setLoading]=useState(false)
   const [constConversation ,setConversation] = useState([])
  
+
   useEffect(()=>{
     const getConversation =async ()=>{
         setLoading(true)
@@ -28,8 +29,8 @@ const ChatDashbord = () => {
     getConversation()
   },[])
   return (
-    <div className="min-h-[400px] max-h-[400px] m overflow-y-auto scrollbar">
-      <Chatts/>
+    <div className="min-h-[70%] max-h-[80%] m overflow-y-auto scrollbar">
+      <Chatts handleConversationClick={handleConversationClick} />
     </div>
   );
 };

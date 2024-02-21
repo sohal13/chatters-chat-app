@@ -10,7 +10,7 @@ function App() {
   const {authUser} = useAuth();
   return (
     <>
-     <div className='p-4 h-screen flex items-center justify-center'>
+     <div className='p-2 w-screen h-screen flex items-center justify-center'>
       <Routes>
         <Route path='/signup' element={<SignUp/>}/>
         <Route path='/login' element={<Login/>}/>

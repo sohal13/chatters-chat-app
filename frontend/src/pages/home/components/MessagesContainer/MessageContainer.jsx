@@ -5,8 +5,9 @@ import { TiMessages } from "react-icons/ti";
 import axios from 'axios';
 import userConversation from '../../../../zustans/useConversation.js';
 import { useAuth } from '../../../../context/AuthContext.jsx';
+import { IoArrowBackSharp } from "react-icons/io5";
 
-const MessageContainer = () => {
+const MessageContainer = ({onBackUser}) => {
 
   const { selectedConversation,setSelectedConversation} = userConversation()
   const {authUser} = useAuth();
@@ -34,34 +35,42 @@ try {
     }
     getChats();
   },[selectedConversation])
+
   return (
-    <div className='md:min-w-[500px] flex flex-col px-2'>
+    <div className='md:min-w-[500px] h-full flex flex-col px-2 py-2'>
       {/*Header*/}
-     {!selectedConversation ? (
-      <>
-     <div className='flex items-center justify-center w-full h-full'>
-  <div className='px-4 text-center sm:text-lg md:text-2xl text-gray-950 font-semibold flex flex-col items-center gap-2'>
-    <p>Welcome!!👋 Sohal13😉</p>
-    <p>Select a chat to start messaging</p>
-    <TiMessages className='text-3xl md:text-6xl text-center'/>
+      {selectedConversation === null ? (
+    <div className='flex items-center justify-center w-full h-full'>
+    <div className='px-4 text-center text-2xl text-gray-950 font-semibold flex flex-col items-center gap-2'>
+      {console.log(authUser.username)}
+      <p className="text-2xl">Welcome!!👋 {authUser.username}😉</p>
+      <p className="text-lg">Select a chat to start messaging</p>
+      <TiMessages className='text-6xl text-center'/>
+    </div>
   </div>
-      </div>
-     </>
-     ) : (<>
-       <div className='flex justify-between  gap-1 bg-sky-700 px-2 py-1 rounded-lg mb-2'>
-       <div className='flex gap-2 justify-center items-center'>
-         <span className='label-text text-xl'>To:</span>
-         <span className='text-gray-950 text-xl font-bold'>{selectedConversation?.fullname}</span>
-         </div>
-         <div className=''>
-         <img className='rounded-full w-10 h-10 cursor-pointer' src={authUser.profilepic}/>
-         </div>   
-       </div>   
-       <Messages/>
-       <Messageinput/>
-       </>
-     )
-     }
+  
+    ) : (
+      <>
+        <div className='flex justify-between gap-1 bg-sky-600 md:px-2  rounded-lg h-10 md:h-12'>
+          <div className='flex gap-2 md:justify-center justify-between items-center w-full'>
+            <div className=' md:hidden ml-1'>
+              <button onClick={()=>onBackUser(true)} className='bg-white rounded-full px-2 py-1 '>
+              <IoArrowBackSharp size={25}/>
+              </button>
+              </div>
+              <div className='flex justify-between mr-2 gap-2'>
+          <div className='self-center '>
+            <img className='rounded-full w-6 h-6 md:w-10 md:h-10 cursor-pointer' src={selectedConversation?.profilepic}/>
+          </div> 
+            <span className='text-gray-950 text-sm  md:text-xl font-bold'>{selectedConversation?.username}</span>
+          </div> 
+          </div>  
+
+        </div>   
+        <Messages/>
+        <Messageinput/>
+      </>
+    )}
     </div>
   )
 }

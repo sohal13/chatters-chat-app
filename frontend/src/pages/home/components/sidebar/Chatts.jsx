@@ -2,16 +2,21 @@ import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import userConversation from '../../../../zustans/useConversation.js'
+import { useSocketContext } from '../../../../context/SocketContext.jsx'
 
 const Chatts = () => {
 
     const navigate = useNavigate()
 
-    const { selectedConversation, setSelectedConversation } = userConversation()
+    const { selectedConversation, setSelectedConversation } = userConversation();
     const [chatUser, setchatUser] = useState([])
     const [loading, setLoading] = useState(false)
     const [selectedUserId, setSelectedUserId] = useState(null)
-
+    const {onlineUser} = useSocketContext()
+   const nowOnline = chatUser.map(user => user._id);
+   console.log(nowOnline);
+   const isOnline = nowOnline.map(userId => onlineUser.includes(userId));
+   console.log(isOnline);
     useEffect(() => {
         const chatUserhandler = async () => {
             try {
@@ -36,7 +41,7 @@ const Chatts = () => {
    const handleConversationClick = (user) => {
         setSelectedConversation(user);
         setSelectedUserId(user._id);   
-}
+   }
 
     return (
         <div className='w-auto'>
@@ -48,14 +53,14 @@ const Chatts = () => {
                     </div>
                 </>) :
                 (<>
-                    {chatUser.map((user) => (
+                    {chatUser.map((user,index) => (
                         <div onClick={()=>handleConversationClick(user)} key={user._id} className={`flex gap-3 items-center rounded p-2 py-1 cursor-pointer
                         ${
                             selectedUserId === user?._id ? 'bg-sky-500' : ''
                         }
                         `}
 >
-                            <div className="avatar online">
+                            <div className={`avatar ${isOnline[index] ? 'online':''}`}>
                                 <div className="w-12 rounded-full">
                                     <img src={user.profilepic} alt='user.img' />
                                 </div>
