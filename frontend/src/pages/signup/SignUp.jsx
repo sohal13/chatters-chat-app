@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useState } from 'react'
 import { Link, json, useNavigate } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext';
+import { toast } from 'react-toastify';
 
 const SignUp = () => {
 
@@ -27,22 +28,25 @@ const SignUp = () => {
 
     const handelSubmit=async(e)=>{
         e.preventDefault();
-        if(inputdata.password !== inputdata.conf_password) return console.log("pssword dosent match");
+        if(inputdata.password !== inputdata.conf_password.toLowerCase()) return console.log("pssword dosent match");
         try {
             setLoading(true)
             const res =await axios.post(`/api/auth/signup`,inputdata)
             const data = res.data;
             if(data.success === false){
                 setLoading(false)
+                toast.error(data.message)
                 console.log(data.message);
             }
             console.log(data);
+            toast.success(data?.message)
             localStorage.setItem("chatters",JSON.stringify(data))
             setAuthUser(data)
             setLoading(false)
             navigate(`/login`)
         } catch (error) {
             setLoading(false)
+            toast.error(error?.response?.data?.message)
             console.log(error.message);
         }
     }
@@ -104,6 +108,7 @@ const SignUp = () => {
                         <input id="conf_password"
                             onChange={handelInput}
                             type='text'
+                            
                             placeholder='Confirm Password'
                             className='w-full input input-bordered h-10' />
                     </div>
