@@ -28,7 +28,7 @@ const SignUp = () => {
 
     const handelSubmit=async(e)=>{
         e.preventDefault();
-        if(inputdata.password !== inputdata.conf_password.toLowerCase()) return console.log("pssword dosent match");
+        if(inputdata.password !== inputdata.conf_password.toLowerCase()) return toast.error("pssword dosent match");
         try {
             setLoading(true)
             const res =await axios.post(`/api/auth/signup`,inputdata)
