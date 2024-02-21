@@ -19,10 +19,6 @@ dotenv.config();
 app.use(express.json());
 app.use(cookieparser());
 
-app.get("/",(req,res)=>{
-    res.send("hiiiii")
-})
-
 app.use('/api/auth',authRout)
 app.use('/api/message',messageRout)
 app.use('/api/user',userRout)
