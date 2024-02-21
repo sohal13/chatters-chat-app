@@ -103,12 +103,12 @@ const Sidebar = ({ onSelectUser}) => {
                 <div className="min-h-[70%] max-h-[80%] m overflow-y-auto scrollbar ">
                         <div className='w-auto'>
                     {searchUsers?.map((user, index) => (
-                            <div onClick={() => handleSearchConversationClick(user)} key={user._id} className={`flex gap-3 items-center rounded p-2 py-1 cursor-pointer
                         
+                            <div onClick={() => handleSearchConversationClick(user)} key={user._id} className={`flex gap-3 items-center rounded p-2 py-1 cursor-pointer
                                 ${searchUsersID === user?._id ? 'bg-sky-500' : ''
                                 }
-                        `}
-                            >
+                        `} >
+                              
                                 <div className={`avatar ${isOnline[index] ? 'online' : ''}`}>
                                     <div className="w-12 rounded-full">
                                         {console.log(user._id)}
@@ -119,7 +119,8 @@ const Sidebar = ({ onSelectUser}) => {
                                     <p className='font-bold text-gray-950'>{user.username}</p>
                                 </div>
                             </div>
-                    ))}
+                    )
+                    )}
                 </div>
                 </div>
                 <div className='mt-auto px-1 py-1 flex'>
@@ -141,11 +142,10 @@ const Sidebar = ({ onSelectUser}) => {
                                 </>) :
                                 (<>
                                     {chatUser.map((user, index) => (
+                                        <>
                                         <div onClick={() => handleConversationClick(user)} key={user._id} className={`flex gap-3 items-center rounded p-2 py-1 cursor-pointer
                         ${selectedUserId === user?._id ? 'bg-sky-500' : ''
-                                            }
-                        `}
-                                        >
+                                            } `}>
                                             <div className={`avatar ${isOnline[index] ? 'online' : ''}`}>
                                                 <div className="w-12 rounded-full">
                                                     <img src={user.profilepic} alt='user.img' />
@@ -153,8 +153,10 @@ const Sidebar = ({ onSelectUser}) => {
                                             </div>
                                             <div className='flex flex-col flex-1'>
                                                 <p className='font-bold text-gray-950'>{user.username}</p>
-                                            </div>
+                                            </div>                                          
                                         </div>
+                                         <div className='divider divide-solid px-3 h-[1px]'></div>
+                                         </>
                                     ))}
                                 </>
                                 )}
