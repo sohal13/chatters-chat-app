@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import Searchinput from './Searchinput'
-import ChatDashbord from './ChatDashbrod'
 import Logout from './Logout'
 import { FaSearch } from 'react-icons/fa'
 import { useNavigate } from 'react-router-dom'
