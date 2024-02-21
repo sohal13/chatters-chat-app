@@ -1,0 +1,8 @@
+services:
+  - name: chatters
+    buildCommand: npm run build
+    startCommand: npm start
+    env:
+      - key: NODE_ENV
+        value: production
+    healthCheckPath: /
