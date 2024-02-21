@@ -1,7 +1,7 @@
 services:
   - name: chatters
     buildCommand: npm run build
-    startCommand: npm start
+    startCommand: node backend/index.js
     env:
       - key: PORT
         value: "3000"
