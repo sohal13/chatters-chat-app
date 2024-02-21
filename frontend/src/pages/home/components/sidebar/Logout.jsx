@@ -7,10 +7,12 @@ import {toast} from 'react-toastify'
 
 const Logout = () => {
 const navigate = useNavigate();
-const {setAuthUser} = useAuth();
-
+const {authUser , setAuthUser} = useAuth();
 const [loading , setLoading] = useState(false)
   const handelLogOut=async()=>{
+    const confirmation = window.prompt("Type your 'username' to confirm logout:");
+    console.log(confirmation);
+    if (confirmation === authUser.username) {
     try {
       setLoading(true)
       const res = await axios.post('/api/auth/logout')
@@ -27,9 +29,12 @@ const [loading , setLoading] = useState(false)
     } catch (error) {
       setLoading(false)
       console.log(error);
-      toast.error(error.response.data.message)
+      toast.error(error?.response?.data?.message)
     }
+  }else{
+    toast.info("LogOut Cancelled")
   }
+}
   return (
     <div onClick={handelLogOut} className='mt-auto px-1 py-1 flex'>
         <BiLogOut size={25} className='hover:bg-red-600 w-10 cursor-pointer hover:text-white rounded-lg'/>

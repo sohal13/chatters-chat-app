@@ -32,7 +32,7 @@ const hadelSubmit=async(e)=>{
   }
 }
   return (
-    <form onSubmit={hadelSubmit} className=' rounded-full'>
+    <form onSubmit={hadelSubmit} className=' rounded-full text-black'>
         <div className='w-full rounded-full flex items-center bg-white'>
             <input value={sendData}  required onChange={handelMessages} id='message'  type='text ' className='w-full bg-transparent outline-none px-4 rounded-full'/>
            <button type='submit'>

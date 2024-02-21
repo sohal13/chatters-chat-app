@@ -52,9 +52,9 @@ try {
     ) : (
       <>
         <div className='flex justify-between gap-1 bg-sky-600 md:px-2  rounded-lg h-10 md:h-12'>
-          <div className='flex gap-2 md:justify-center justify-between items-center w-full'>
-            <div className=' md:hidden ml-1'>
-              <button onClick={()=>onBackUser(true)} className='bg-white rounded-full px-2 py-1 '>
+          <div className='flex gap-2 md:justify-between items-center w-full'>
+            <div className=' md:hidden ml-1 self-center'>
+              <button onClick={()=>onBackUser(true)} className='bg-white rounded-full px-2 py-1 self-center'>
               <IoArrowBackSharp size={25}/>
               </button>
               </div>
@@ -62,7 +62,7 @@ try {
           <div className='self-center '>
             <img className='rounded-full w-6 h-6 md:w-10 md:h-10 cursor-pointer' src={selectedConversation?.profilepic}/>
           </div> 
-            <span className='text-gray-950 text-sm  md:text-xl font-bold'>{selectedConversation?.username}</span>
+            <span className='text-gray-950 self-center text-sm  md:text-xl font-bold'>{selectedConversation?.username}</span>
           </div> 
           </div>  
 

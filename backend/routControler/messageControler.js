@@ -61,7 +61,7 @@ export const getMessage=async(req,res)=>{
             participants:{$all:[senderId,reciverId]}
         }).populate("messages"); //actual messages
 
-        if(!chats) res.status(200).send([]);
+        if(!chats) return res.status(200).send([]);
         const message = chats.messages;
         res.status(200).send(message)
     } catch (error) {
@@ -69,6 +69,6 @@ export const getMessage=async(req,res)=>{
             success: false,
             message: error
         })
-        console.log(error);
+        console.log(error.message);
     }
 }
