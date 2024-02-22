@@ -7,6 +7,7 @@ import { useAuth } from './context/AuthContext.jsx'
 import { VerifiedRout } from './context/VerifyUser.jsx'
 import { ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Profile from './pages/profile/Profile.jsx'
 
 function App() {
   const {authUser} = useAuth();
@@ -18,6 +19,8 @@ function App() {
         <Route path='/login' element={<Login/>}/>
         <Route element={<VerifiedRout/>}>
         <Route path='/' element={<Home/>}/>
+        <Route path='/profile/:id' element={<Profile/>}/>
+
         </Route>
       </Routes>
       <ToastContainer />

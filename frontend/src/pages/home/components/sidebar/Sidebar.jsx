@@ -6,12 +6,13 @@ import userConversation from '../../../../zustans/useConversation'
 import { useSocketContext } from '../../../../context/SocketContext'
 import axios from 'axios'
 import { IoArrowBackSharp } from 'react-icons/io5'
+import { useAuth } from '../../../../context/AuthContext'
 
 const Sidebar = ({ onSelectUser}) => {
 
     const location = useLocation();
     const navigate = useNavigate();
-
+const {authUser} = useAuth()
     const { selectedConversation, setSelectedConversation } = userConversation();
     const [chatUser, setchatUser] = useState([])
     const [selectedUserId, setSelectedUserId] = useState(null)
@@ -83,12 +84,15 @@ const Sidebar = ({ onSelectUser}) => {
     return (
         <div className='h-full w-auto px-1'>
             {/*search bar finish*/}
+            <div className='flex justify-between gap-2'>
             <form onSubmit={handelSubmitSearch} className='w-auto flex items-center justify-between bg-white rounded-full '>
                 <input value={searchinput} onChange={(e) => setSearch(e.target.value)}  type='text' className='px-4 w-auto bg-transparent outline-none rounded-full' placeholder='search user'/>
                 <button type='submit' className='btn btn-circle bg-sky-700 hover:bg-gray-950'>
                     <FaSearch />
                 </button>
             </form>
+                <img onClick={navigate(`/profile/${authUser._id}`)} src={authUser.profilepic} className='self-center h-12 w-12 hover:scale-110 cursor-pointer' />
+            </div>
             <div className='divider px-3'></div>
             {/*search bar finish*/}
             {searchUsers?.length > 0 ? (
