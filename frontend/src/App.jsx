@@ -20,7 +20,6 @@ function App() {
         <Route element={<VerifiedRout/>}>
         <Route path='/' element={<Home/>}/>
         <Route path='/profile/:id' element={<Profile/>}/>
-
         </Route>
       </Routes>
       <ToastContainer />

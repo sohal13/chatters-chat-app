@@ -91,7 +91,7 @@ const {authUser} = useAuth()
                     <FaSearch />
                 </button>
             </form>
-                <img onClick={navigate(`/profile/${authUser._id}`)} src={authUser.profilepic} className='self-center h-12 w-12 hover:scale-110 cursor-pointer' />
+                <img onClick={()=>navigate(`/profile/${authUser._id}`)} src={authUser.profilepic} className='self-center h-12 w-12 hover:scale-110 cursor-pointer' />
             </div>
             <div className='divider px-3'></div>
             {/*search bar finish*/}
