@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import userConversation from '../../../../zustans/useConversation';
 import { useAuth } from '../../../../context/AuthContext';
 import { useSocketContext } from '../../../../context/SocketContext';
-
+import notify from '../../../../assets/sound/notification.mp3'
 const Message = () => {
 
   const [loading, setLoading] = useState(false);
@@ -16,6 +16,8 @@ const Message = () => {
 
   useEffect(()=>{
     socket?.on("newMessage",(newMessage)=>{
+      const sound = new Audio(notify)
+      sound.play();
       setMessages([...messages,newMessage])
     })
 

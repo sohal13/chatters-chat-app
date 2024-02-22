@@ -20,9 +20,7 @@ const Sidebar = ({ onSelectUser}) => {
 
     //chats function
 
-    console.log(nowOnline);
     const isOnline = nowOnline.map(userId => onlineUser.includes(userId));
-    console.log(isOnline);
     useEffect(() => {
         const chatUserhandler = async () => {
             try {
@@ -57,9 +55,6 @@ const Sidebar = ({ onSelectUser}) => {
     const [searchUsers, setSearchUsers] = useState([])
     const [searchUsersID, setSearchUsersID] = useState([])
 
-
-    console.log(searchUsers);
-
     const handelSubmitSearch = async (e) => {
         e.preventDefault()
         setLoading(true)
@@ -84,8 +79,6 @@ const Sidebar = ({ onSelectUser}) => {
         setSearchUsersID(user._id)
     }
     //-----------------------------
-
-    console.log(searchinput);
 
     return (
         <div className='h-full w-auto px-1'>
@@ -142,7 +135,7 @@ const Sidebar = ({ onSelectUser}) => {
                                 </>) :
                                 (<>
                                     {chatUser.map((user, index) => (
-                                        <>
+                                        < div key={user._id}>
                                         <div onClick={() => handleConversationClick(user)} key={user._id} className={`flex gap-3 items-center rounded p-2 py-1 cursor-pointer
                         ${selectedUserId === user?._id ? 'bg-sky-500' : ''
                                             } `}>
@@ -156,7 +149,7 @@ const Sidebar = ({ onSelectUser}) => {
                                             </div>                                          
                                         </div>
                                          <div className='divider divide-solid px-3 h-[1px]'></div>
-                                         </>
+                                         </div>
                                     ))}
                                 </>
                                 )}
