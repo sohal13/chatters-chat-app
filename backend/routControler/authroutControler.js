@@ -32,7 +32,7 @@ export const SignUp = async (req, res) => {
             fullname: newUser.fullname,
             username: newUser.username,
             profilepic: newUser.profilepic,
-
+            email:newUser.email,
         })
 
     } catch (error) {
@@ -59,6 +59,7 @@ export const Login = async (req, res) => {
             fullname: user.fullname,
             username: user.username,
             profilepic: user.profilepic,
+            email:user.email,
             message: "Succesfully LogIn"
         })
     } catch (error) {
