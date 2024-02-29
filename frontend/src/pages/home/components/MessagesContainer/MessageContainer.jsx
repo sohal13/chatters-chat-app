@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import Messages from './Messages'
 import Messageinput from './Messageinput'
 import { TiMessages } from "react-icons/ti";
 import axios from 'axios';
 import userConversation from '../../../../zustans/useConversation.js';
 import { useAuth } from '../../../../context/AuthContext.jsx';
 import { IoArrowBackSharp } from "react-icons/io5";
+import Message from './Message.jsx';
 
 const MessageContainer = ({onBackUser}) => {
 
@@ -37,7 +37,7 @@ try {
   },[selectedConversation])
 
   return (
-    <div className='md:min-w-[500px] h-full flex flex-col px-2 py-2'>
+    <div className='md:min-w-[500px] h-full flex flex-col py-2'>
       {/*Header*/}
       {selectedConversation === null ? (
     <div className='flex items-center justify-center w-full h-full'>
@@ -66,7 +66,9 @@ try {
           </div>  
 
         </div>   
-        <Messages/>
+        <div className='flex-1 overflow-auto'>
+        <Message/>
+        </div>
         <Messageinput/>
       </>
     )}

@@ -10,19 +10,22 @@ const Message = () => {
   const { messages, setMessages, selectedConversation } = userConversation()
   const {authUser} = useAuth();
   const {socket} = useSocketContext();
+  const [usersWithNewMessages, setUsersWithNewMessages] = useState([]);
   const id = selectedConversation?._id
   const leastMesageRef = useRef();
 
 
   useEffect(()=>{
     socket?.on("newMessage",(newMessage)=>{
-      const sound = new Audio(notify)
+      const sound = new Audio(notify);
       sound.play();
       setMessages([...messages,newMessage])
     })
 
     return ()=> socket?.off("newMessage")
   },[socket,setMessages,messages])
+
+  
  useEffect(()=>{
   setTimeout(()=>{
 leastMesageRef.current?.scrollIntoView({behavior:"smooth"})
