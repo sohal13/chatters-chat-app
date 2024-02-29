@@ -20,7 +20,8 @@ export const currentChatters=async(req,res)=>{
         const userId = req.user._conditions._id;
         const currentChatters = await Conversation.find({
             participants:userId
-        })
+        }).sort({ updatedAt: -1 });
+
         if (!currentChatters || currentChatters.length === 0) {
             return res.status(200).send([]);
         }
@@ -29,9 +30,14 @@ export const currentChatters=async(req,res)=>{
             const otherParticipants = conversation.participants.filter(id => id !== userId);
             return [...ids, ...otherParticipants];
         }, []);
+
 const otherParticipantIds = participantIds.filter(id => id.toString() !== userId.toString());
 
-const users = await User.find({_id:{$in:otherParticipantIds}}).select("-password").select("-email");
+const user = await User.find({_id:{$in:otherParticipantIds}}).select("-password").select("-email");
+
+const users = otherParticipantIds.map(id => user.find(user => user._id.toString() === id.toString()));
+
+console.log(users);
 res.send(users).status(200)
     } catch (error) {
         res.status(500).send({

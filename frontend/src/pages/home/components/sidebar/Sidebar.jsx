@@ -14,7 +14,7 @@ const Sidebar = ({ onSelectUser}) => {
     const location = useLocation();
     const navigate = useNavigate();
 const {authUser} = useAuth()
-    const { selectedConversation, setSelectedConversation } = userConversation();
+    const {messages , selectedConversation, setSelectedConversation } = userConversation();
     const [chatUser, setchatUser] = useState([])
     const [selectedUserId, setSelectedUserId] = useState(null)
     const { onlineUser , socket } = useSocketContext()
@@ -44,20 +44,7 @@ const {authUser} = useAuth()
         }
         chatUserhandler();
 
-        socket?.on('newMessage', (newMessage) => {
-            setchatUser([...chatUser,newMessage.user]);
-          return () => {
-            socket?.off('newMessage');
-          }
-          })
-
-          return () => {
-            // Clean up event listeners
-            socket?.off('newMessage');
-        };
-        
-    }, [])
-
+    }, [messages])
 
     const handleConversationClick = (user) => {
         onSelectUser(user);
