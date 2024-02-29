@@ -9,20 +9,19 @@ import { IoArrowBackSharp } from 'react-icons/io5'
 import { useAuth } from '../../../../context/AuthContext'
 import { toast } from 'react-toastify'
 
-const Sidebar = ({ onSelectUser}) => {
+const Sidebar = ({ onSelectUser }) => {
 
     const location = useLocation();
     const navigate = useNavigate();
-const {authUser} = useAuth()
-    const {messages , selectedConversation, setSelectedConversation } = userConversation();
+    const { authUser } = useAuth()
+    const { messages, selectedConversation, setSelectedConversation } = userConversation();
     const [chatUser, setchatUser] = useState([])
     const [selectedUserId, setSelectedUserId] = useState(null)
-    const { onlineUser , socket } = useSocketContext()
-    const [newMessageUsers, setNewMessageUsers] = useState([]);
-    const nowOnline = chatUser.map((user)=>(user._id));
+    const { onlineUser, socket } = useSocketContext()
+    const [newMessageUsers, setNewMessageUsers] = useState('');
+    const nowOnline = chatUser.map((user) => (user._id));
 
     //chats function
-
     const isOnline = nowOnline.map(userId => onlineUser.includes(userId));
 
     useEffect(() => {
@@ -51,6 +50,7 @@ const {authUser} = useAuth()
         setSelectedConversation(user);
         setSelectedUserId(user._id);
         setSearchUsersID(user._id)
+        setNewMessageUsers('')
     }
     //------------------------------------------------
 
@@ -58,7 +58,7 @@ const {authUser} = useAuth()
     const [loading, setLoading] = useState(false)
     const [searchinput, setSearch] = useState('');
     const [searchUsers, setSearchUsers] = useState([])
-    const [searchUsersID, setSearchUsersID] = useState([])
+    const [searchUsersID, setSearchUsersID] = useState([]);
 
     const handelSubmitSearch = async (e) => {
         e.preventDefault()
@@ -71,9 +71,9 @@ const {authUser} = useAuth()
                 console.log(data.message);
             }
             setLoading(false)
-            if(data.length === 0){
+            if (data.length === 0) {
                 toast.info("User Not Found")
-            }else{
+            } else {
                 setSearchUsers(data)
             }
 
@@ -83,64 +83,69 @@ const {authUser} = useAuth()
         }
     }
 
-    const handelSearchBackButton =()=>{
+ 
+    const handelSearchBackButton = () => {
         setSearchUsers([])
         setSearch('')
     }
-    //-----------------------------
 
+    
+  useEffect(()=>{
+    socket?.on("newMessage",(newMessage)=>{
+        setNewMessageUsers(newMessage)
+    })
+    return ()=> socket?.off("newMessage")
+  },[socket,messages])
+
+    //-----------------------------
     return (
         <div className='h-full w-auto px-1'>
             {/*search bar finish*/}
             <div className='flex justify-between gap-2'>
-            <form onSubmit={handelSubmitSearch} className='w-auto flex items-center justify-between bg-white rounded-full '>
-                <input value={searchinput} onChange={(e) => setSearch(e.target.value)}  type='text' className='px-4 w-auto bg-transparent outline-none rounded-full' placeholder='search user'/>
-                <button type='submit' className='btn btn-circle bg-sky-700 hover:bg-gray-950'>
-                    <FaSearch />
-                </button>
-            </form>
-                <img onClick={()=>navigate(`/profile/${authUser._id}`)} src={authUser.profilepic} className='self-center h-12 w-12 hover:scale-110 cursor-pointer' />
+                <form onSubmit={handelSubmitSearch} className='w-auto flex items-center justify-between bg-white rounded-full '>
+                    <input value={searchinput} onChange={(e) => setSearch(e.target.value)} type='text' className='px-4 w-auto bg-transparent outline-none rounded-full' placeholder='search user' />
+                    <button type='submit' className='btn btn-circle bg-sky-700 hover:bg-gray-950'>
+                        <FaSearch />
+                    </button>
+                </form>
+                <img onClick={() => navigate(`/profile/${authUser._id}`)} src={authUser.profilepic} className='self-center h-12 w-12 hover:scale-110 cursor-pointer' />
             </div>
             <div className='divider px-3'></div>
             {/*search bar finish*/}
             {searchUsers?.length > 0 ? (
-            <>
-                <div className="min-h-[70%] max-h-[80%] m overflow-y-auto scrollbar ">
+                <>
+                    <div className="min-h-[70%] max-h-[80%] m overflow-y-auto scrollbar ">
                         <div className='w-auto'>
-                    {searchUsers?.map((user, index) => (
-                        <div key={user._id} >
-                            <div onClick={() => handleConversationClick(user)} key={user._id} 
-                            className={`flex gap-3 items-center rounded p-2 py-1 cursor-pointer
-                            ${
-                                newMessageUsers === user?._id ? 'bg-green-500' : ''
-                              }
-                                ${searchUsersID === user?._id ? 'bg-sky-500' : ''
-                                }
+                            {searchUsers?.map((user, index) => (
+                                <div key={user._id} >
+                                    <div onClick={() => handleConversationClick(user)} key={user._id}
+                                        className={`flex gap-3 items-center rounded p-2 py-1 cursor-pointer
+                                ${searchUsersID === user?._id ? 'bg-sky-500' : ''}
                         `} >
-                                <div className={`avatar ${isOnline[index] ? 'online' : ''}`}>
-                                    <div className="w-12 rounded-full">
-                                        <img src={user.profilepic} alt='user.img' />
+                                        <div className={`avatar ${isOnline[index] ? 'online' : ''}`}>
+                                            <div className="w-12 rounded-full">
+                                                <img src={user.profilepic} alt='user.img' />
+                                            </div>
+                                        </div>
+                                        <div className='flex flex-col flex-1'>
+                                            <p className='font-bold text-gray-950'>{user.username}</p>
+                                        </div>
                                     </div>
+                                    <div className='divider divide-solid px-3 h-[1px]'></div>
                                 </div>
-                                <div className='flex flex-col flex-1'>
-                                    <p className='font-bold text-gray-950'>{user.username}</p>
-                                </div>
-                            </div>
-                            <div className='divider divide-solid px-3 h-[1px]'></div>
-                            </div>
-                            
-                    )
-                    
-                    )}
-                    
-                </div>
-                </div>
-                <div className='mt-auto px-1 py-1 flex'>
+
+                            )
+
+                            )}
+
+                        </div>
+                    </div>
+                    <div className='mt-auto px-1 py-1 flex'>
                         <button onClick={handelSearchBackButton} className='bg-white rounded-full px-2 py-1 self-center'>
                             <IoArrowBackSharp size={25} />
                         </button>
                     </div>
-            </>
+                </>
             )
                 : (<>
                     <div className="min-h-[70%] max-h-[80%] m overflow-y-auto scrollbar ">
@@ -155,20 +160,23 @@ const {authUser} = useAuth()
                                 (<>
                                     {chatUser.map((user, index) => (
                                         < div key={user._id}>
-                                        <div onClick={() => handleConversationClick(user)} key={user._id} className={`flex gap-3 items-center rounded p-2 py-1 cursor-pointer
+                                            <div onClick={() => handleConversationClick(user)} key={user._id} className={`flex gap-3 items-center rounded p-2 py-1 cursor-pointer
                         ${selectedUserId === user?._id ? 'bg-sky-500' : ''
-                                            } `}>
-                                            <div className={`avatar ${isOnline[index] ? 'online' : ''}`}>
-                                                <div className="w-12 rounded-full">
-                                                    <img src={user.profilepic} alt='user.img' />
+                                                } `}>
+                                                <div className={`avatar ${isOnline[index] ? 'online' : ''}`}>
+                                                    <div className="w-12 rounded-full">
+                                                        <img src={user.profilepic} alt='user.img' />
+                                                    </div>
+                                                </div>
+                                                <div className='flex flex-col flex-1'>
+                                                    <p className='font-bold text-gray-950'>{user.username}</p>
+                                                </div>
+                                                <div>
+                                                    {selectedConversation === null && newMessageUsers.reciverId === authUser._id  && newMessageUsers.senderId === user._id ? <div className="rounded-full bg-green-700 text-sm text-white px-[4px]">+1</div>:<></>}
                                                 </div>
                                             </div>
-                                            <div className='flex flex-col flex-1'>
-                                                <p className='font-bold text-gray-950'>{user.username}</p>
-                                            </div>                                          
+                                            <div className='divider divide-solid px-3 h-[1px]'></div>
                                         </div>
-                                         <div className='divider divide-solid px-3 h-[1px]'></div>
-                                         </div>
                                     ))}
                                 </>
                                 )}

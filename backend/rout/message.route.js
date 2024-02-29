@@ -7,5 +7,4 @@ router.post('/send/:id', isLogin ,sendMessage)
 
 router.get('/:id', isLogin ,getMessage)
 
-
 export default router

@@ -37,7 +37,6 @@ const user = await User.find({_id:{$in:otherParticipantIds}}).select("-password"
 
 const users = otherParticipantIds.map(id => user.find(user => user._id.toString() === id.toString()));
 
-console.log(users);
 res.send(users).status(200)
     } catch (error) {
         res.status(500).send({
