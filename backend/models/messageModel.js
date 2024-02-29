@@ -14,7 +14,12 @@ const messageSchema = mongoose.Schema({
     message:{
         type:String,
         required:true
-    }
+    },
+    conversationId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Conversation',
+        default:[]
+    },
 },{timestamps:true})
 
 const Message = mongoose.model("Message",messageSchema)

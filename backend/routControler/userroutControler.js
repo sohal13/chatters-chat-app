@@ -24,11 +24,13 @@ export const currentChatters=async(req,res)=>{
         if (!currentChatters || currentChatters.length === 0) {
             return res.status(200).send([]);
         }
+  
         const participantIds = currentChatters.reduce((ids, conversation) => {
             const otherParticipants = conversation.participants.filter(id => id !== userId);
             return [...ids, ...otherParticipants];
         }, []);
 const otherParticipantIds = participantIds.filter(id => id.toString() !== userId.toString());
+
 const users = await User.find({_id:{$in:otherParticipantIds}}).select("-password").select("-email");
 res.send(users).status(200)
     } catch (error) {

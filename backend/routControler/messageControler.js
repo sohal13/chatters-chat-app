@@ -23,6 +23,7 @@ try {
         senderId,
         reciverId,
         message,
+        conversationId: chats._id
     })
     //we are not saving the chat by  await newMessage.send()
 
